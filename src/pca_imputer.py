@@ -16,6 +16,8 @@ class PCAImputer(_BaseImputer):
         self.y = y
         return self
     def transform(self, X):
+        if np.any(np.isnan(X).mean(axis = 1) == 1):
+            raise ValueError("X has rows with all missing values")
         if isinstance(X, np.ndarray):
             X = pd.DataFrame(X)
         return self._fill_db(X, self.n_components)
